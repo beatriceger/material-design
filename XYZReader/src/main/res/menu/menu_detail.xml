@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_previous"
+        android:title="@string/previous_menu"
+        android:icon="@drawable/ic_left"
+        android:orderInCategory="99"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_next"
+        android:title="@string/next"
+        android:icon="@drawable/ic_right"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+</menu>
