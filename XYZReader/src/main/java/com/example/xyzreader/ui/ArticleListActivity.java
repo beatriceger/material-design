@@ -13,13 +13,11 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.format.DateUtils;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,10 +30,6 @@ import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
 
 import java.lang.reflect.Field;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -43,8 +37,8 @@ import java.util.GregorianCalendar;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
-public class ArticleListActivity extends ActionBarActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+public class ArticleListActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
@@ -66,7 +60,7 @@ public class ArticleListActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout_refresh);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
 
@@ -118,7 +112,7 @@ public class ArticleListActivity extends ActionBarActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -140,12 +134,6 @@ public class ArticleListActivity extends ActionBarActivity implements
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onRefresh() {
-        mIsRefreshing = true;
-        refresh();
     }
 
     private void updateRefreshingUI() {
@@ -177,6 +165,28 @@ public class ArticleListActivity extends ActionBarActivity implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    private Cursor mCursor;
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.fab_share:
+                onShare();
+                break;
+            case R.id.frame_layout_collapsing_toolbar:
+                mCursor.moveToPosition(mPa.getCurrentItem());
+                ImageActivity.startActivity(this,
+                        mCursor.getString(ArticleLoader.Query.TITLE),
+                        mCursor.getString(ArticleLoader.Query.AUTHOR),
+                        mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE),
+                        mCursor.getString(ArticleLoader.Query.PHOTO_URL));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                break;
+        }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

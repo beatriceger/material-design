@@ -12,7 +12,8 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.xyzreader.AnimationUtils;
 import com.example.xyzreader.AppBarStateChangeListener;
+import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Picasso;
 
@@ -120,7 +122,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         // setting animations
         mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, NetworkInfo.State state) {
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 switch (state) {
                     case COLLAPSED:
                         showToolbarContents();
@@ -132,6 +134,9 @@ public class ArticleDetailActivity extends AppCompatActivity
             }
         });
 
+        // set click listeners on image buttons
+        mFabShare.setOnClickListener(this);
+        mFrameLayoutCollapsingToolbar.setOnClickListener(this);
         // fonts
         mTxtTitle.setTypeface(Typeface.createFromAsset(getResources().getAssets(),
                 "Montserrat-Bold.ttf"));
@@ -139,10 +144,6 @@ public class ArticleDetailActivity extends AppCompatActivity
                 "Montserrat-Regular.ttf"));
         mTxtDate.setTypeface(Typeface.createFromAsset(getResources().getAssets(),
                 "Montserrat-Regular.ttf"));
-
-        // set click listeners on image buttons
-        mFabShare.setOnClickListener(this);
-        mFrameLayoutCollapsingToolbar.setOnClickListener(this);
     }
 
     private void setTitleData(int position) {
@@ -232,6 +233,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
@@ -243,6 +245,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         mCursor.close();
         super.onDestroy();
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -293,16 +296,17 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
     }
 
-    private static class MyPagerAdapter extends FragmentStatePagerAdapter {
+    private static class MyPagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter {
         private WeakReference<Cursor> mCursorWeakReference;
 
-        public MyPagerAdapter(android.app.FragmentManager fm, Cursor cursor) {
+
+        public MyPagerAdapter(android.support.v4.app.FragmentManager fm, Cursor cursor) {
             super(fm);
-            mCursorWeakReference = new WeakReference<>(cursor);
+            mCursorWeakReference = new WeakReference<Cursor>(cursor);
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public android.support.v4.app.Fragment getItem(int position) {
             mCursorWeakReference.get().moveToPosition(position);
             return ArticleDetailFragment.newInstance(mCursorWeakReference.get().getString(ArticleLoader.Query.BODY));
         }

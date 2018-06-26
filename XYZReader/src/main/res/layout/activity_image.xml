@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/titleTextAppearance"
-                android:textColor="#848482"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/detail_title_text_size" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/subtitleTextAppearance"
-                android:textColor="#848482"
+                android:textColor="@color/grey"
                 android:textSize="@dimen/detail_body_text_size" />
 
             <TextView
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/subtitleTextAppearance"
-                android:textColor="#848482"
+                android:textColor="@color/secondary_text"
                 android:textSize="@dimen/detail_body_text_size" />
 
         </LinearLayout>

@@ -18,7 +18,7 @@
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/photo_placeholder" />
+            android:background="#c0b9ae" />
 
         <TextView
             android:id="@+id/article_title"
@@ -31,7 +31,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="16dp"
-            android:textColor="848482" />
+            android:textColor="@color/secondary_text" />
 
         <TextView
             android:id="@+id/article_date"
@@ -43,7 +43,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:singleLine="true"
-            android:textColor="848482" />
+            android:textColor="@color/secondary_text" />
 
         <TextView
             android:id="@+id/article_author"
@@ -56,7 +56,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:singleLine="true"
-            android:textColor="848482" />
+            android:textColor="@color/secondary_text" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

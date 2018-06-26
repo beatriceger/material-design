@@ -98,7 +98,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_full_screen);
+        setContentView(R.layout.activity_image);
         mImgViewPhoto = (ImageView) findViewById(R.id.image_view_photo);
         mProgressBarLoading = (ProgressBar) findViewById(R.id.progress_bar_image_loading);
         mTxtError = (TextView) findViewById(R.id.text_view_error);
