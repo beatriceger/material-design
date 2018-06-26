@@ -17,7 +17,7 @@
         android:indeterminate="true" />
 
     <ImageView
-        android:id="@+id/image_view_photo"
+        android:id="@+id/article_image_view_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/image_cannot_be_loaded"
+        android:text="@string/img_cannot_be_loaded"
         android:visibility="gone" />
 
     <RelativeLayout
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/titleTextAppearance"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/dark_gray"
                 android:textSize="@dimen/detail_title_text_size" />
 
             <TextView
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/subtitleTextAppearance"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/dark_gray"
                 android:textSize="@dimen/detail_body_text_size" />
 
         </LinearLayout>

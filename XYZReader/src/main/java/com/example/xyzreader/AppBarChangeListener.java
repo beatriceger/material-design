@@ -2,27 +2,27 @@ package com.example.xyzreader;
 
 import android.support.design.widget.AppBarLayout;
 
-public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffsetChangedListener {
+public abstract class AppBarChangeListener implements AppBarLayout.OnOffsetChangedListener {
 
-    private State mCurrentState = State.IDLE;
+    private State currentState = State.IDLE;
 
     @Override
     public final void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         if (i == 0) {
-            if (mCurrentState != State.EXPANDED) {
+            if (currentState != State.EXPANDED) {
                 onStateChanged(appBarLayout, State.EXPANDED);
             }
-            mCurrentState = State.EXPANDED;
+            currentState = State.EXPANDED;
         } else if (Math.abs(i) >= appBarLayout.getTotalScrollRange()) {
-            if (mCurrentState != State.COLLAPSED) {
+            if (currentState != State.COLLAPSED) {
                 onStateChanged(appBarLayout, State.COLLAPSED);
             }
-            mCurrentState = State.COLLAPSED;
+            currentState = State.COLLAPSED;
         } else {
-            if (mCurrentState != State.IDLE) {
+            if (currentState != State.IDLE) {
                 onStateChanged(appBarLayout, State.IDLE);
             }
-            mCurrentState = State.IDLE;
+            currentState = State.IDLE;
         }
     }
 

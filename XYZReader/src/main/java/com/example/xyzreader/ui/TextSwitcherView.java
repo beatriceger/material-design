@@ -51,10 +51,10 @@ public class TextSwitcherView extends TextSwitcher {
     }
 
     private void initializeAttributes(AttributeSet attributeSet) {
-        TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attributeSet, R.styleable.SimpleTextSwitcher, 0, 0);
+        TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attributeSet, R.styleable.TextSwitcherView, 0, 0);
         try {
-            mText = typedArray.getString(R.styleable.SimpleTextSwitcher_switcherText);
-            mTextAppearance = typedArray.getResourceId(R.styleable.SimpleTextSwitcher_switcherTextAppearance, android.R.style.TextAppearance_Medium);
+            mText = typedArray.getString(R.styleable.TextSwitcherView_switcherText);
+            mTextAppearance = typedArray.getResourceId(R.styleable.TextSwitcherView_switcherTextAppearance, android.R.style.TextAppearance_Medium);
         } finally {
             typedArray.recycle();
         }

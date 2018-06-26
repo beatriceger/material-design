@@ -9,17 +9,14 @@
 
     <string name="up">Up</string>
     <string name="info">Info</string>
-    <string name="next">Next</string>
-    <string name="previous_menu">Previous</string>
-    <string name="image_cannot_be_loaded">Image cannot be loaded!</string>
-
+    <string name="img_cannot_be_loaded">The image cannot be loaded!</string>
     <string name="article_image">article_image</string>
-    <string name="share_using">Share using...</string>
+    <string name="share_using">Share it using...</string>
     <string name="no_app_available_to_share_content">No app available to share content !</string>
     <string name="action_info">Info</string>
     <string name="info_msg">Material design usages.</string>
     <string name="dismiss">Dismiss</string>
-    <string name="action_previous">Previous</string>
-    <string name="action_next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 
 </resources>

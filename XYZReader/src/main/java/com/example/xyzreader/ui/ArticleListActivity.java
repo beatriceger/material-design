@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -37,13 +36,12 @@ import java.lang.reflect.Field;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
-public class ArticleListActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
+public class ArticleListActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    private RecyclerView mRecyclerView;
     private boolean mIsRefreshing = false;
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
@@ -59,19 +57,17 @@ public class ArticleListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
+        bindViews();
+        init(savedInstanceState);
+    }
+
+    private void bindViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout_refresh);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-
-        setSupportActionBar(mToolbar);
-        getToolbarTitleTxtView(mToolbar).setTypeface(Typeface.createFromAsset(getResources().getAssets(),
-                "Montserrat-Bold.ttf"));
-
-        initComponents(savedInstanceState);
     }
 
-    private void initComponents(Bundle savedInstanceState) {
+    private void init(Bundle savedInstanceState) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         getLoaderManager().initLoader(0, null, this);
@@ -79,15 +75,23 @@ public class ArticleListActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             refresh();
         }
+
+        setSupportActionBar(mToolbar);
+
+        // set font on toolbar title
+        getToolbarTitleTextView(mToolbar).setTypeface(Typeface.createFromAsset(getResources().getAssets(),
+                "Montserrat-Bold.ttf"));
     }
 
-    private TextView getToolbarTitleTxtView(Toolbar toolbar) {
+    private TextView getToolbarTitleTextView(Toolbar toolbar) {
         try {
             Field field = Toolbar.class.getDeclaredField("mTitleTextView");
             field.setAccessible(true);
             TextView textView = (TextView) field.get(toolbar);
             return textView;
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -136,6 +140,12 @@ public class ArticleListActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onRefresh() {
+        mIsRefreshing = true;
+        refresh();
+    }
+
     private void updateRefreshingUI() {
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
@@ -165,28 +175,6 @@ public class ArticleListActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
-    }
-
-    private Cursor mCursor;
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        switch (id) {
-            case R.id.fab_share:
-                onShare();
-                break;
-            case R.id.frame_layout_collapsing_toolbar:
-                mCursor.moveToPosition(mPa.getCurrentItem());
-                ImageActivity.startActivity(this,
-                        mCursor.getString(ArticleLoader.Query.TITLE),
-                        mCursor.getString(ArticleLoader.Query.AUTHOR),
-                        mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE),
-                        mCursor.getString(ArticleLoader.Query.PHOTO_URL));
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-        }
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

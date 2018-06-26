@@ -99,7 +99,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        mImgViewPhoto = (ImageView) findViewById(R.id.image_view_photo);
+        mImgViewPhoto = (ImageView) findViewById(R.id.article_image_view_photo);
         mProgressBarLoading = (ProgressBar) findViewById(R.id.progress_bar_image_loading);
         mTxtError = (TextView) findViewById(R.id.text_view_error);
         mImgBtnClose = (ImageButton) findViewById(R.id.image_button_close);

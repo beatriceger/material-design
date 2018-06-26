@@ -1,19 +1,15 @@
 package com.example.xyzreader.ui;
 
-import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,15 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xyzreader.AnimationUtils;
-import com.example.xyzreader.AppBarStateChangeListener;
+import com.example.xyzreader.Animation;
+import com.example.xyzreader.AppBarChangeListener;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
-
-import static com.example.xyzreader.AppBarStateChangeListener.State.*;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
@@ -71,13 +65,13 @@ public class ArticleDetailActivity extends AppCompatActivity
         mTxtTitle = (TextView) findViewById(R.id.text_view_title);
         mTxtAuthor = (TextView) findViewById(R.id.text_view_author);
         mTxtDate = (TextView) findViewById(R.id.text_view_date);
-        mImageViewPhoto = (ImageView) findViewById(R.id.image_view_photo);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mImageViewPhoto = (ImageView) findViewById(R.id.article_image_view_photo);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.article_details_toolbar_layout);
         mFrameLayoutCollapsingToolbar = (FrameLayout) findViewById(R.id.frame_layout_collapsing_toolbar);
         mToolbar = (Toolbar) findViewById(R.id.up_container);
         mSimpleTextSwitcherToolbarTitle = (TextSwitcherView) findViewById(R.id.simple_text_switcher_toolbar_title);
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        mPager = (ViewPager) findViewById(R.id.article_details_pager);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.article_detail_app_bar);
         mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
         initializeComponents(savedInstanceState);
     }
@@ -104,15 +98,14 @@ public class ArticleDetailActivity extends AppCompatActivity
             @Override
             public void onPageSelected(final int position) {
                 if (mSimpleTextSwitcherToolbarTitle.getAlpha() == 0.0) {
-                    AnimationUtils.fadeOutFadeInSimultaneously(mCollapsingToolbarLayout,
+                    Animation.fadeOutFadeInSimultaneously(mCollapsingToolbarLayout,
                             new Runnable() {
                                 @Override
                                 public void run() {
                                     setTitleData(position);
                                 }
-                            },
-                            1000,
-                            1000);
+                            }
+                    );
                 } else {
                     setTitleData(position);
                 }
@@ -120,7 +113,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         });
 
         // setting animations
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 switch (state) {

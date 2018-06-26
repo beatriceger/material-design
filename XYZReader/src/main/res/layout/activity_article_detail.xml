@@ -1,18 +1,20 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/article_detail_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_expanded"
+        android:layout_height="@dimen/bar_expanding"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/article_details_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -20,7 +22,7 @@
             app:titleEnabled="false">
 
             <ImageView
-                android:id="@+id/image_view_photo"
+                android:id="@+id/article_image_view_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -41,7 +43,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax">
+                app:layout_collapseMode="parallax"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -60,7 +63,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textAppearance="?attr/titleTextAppearance"
-                        android:textColor="#DCDCDC"
+                        android:textColor="#000000"
                         android:textSize="@dimen/detail_title_text_size" />
 
                     <TextView
@@ -68,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/subtitleTextAppearance"
-                        android:textColor="#A9A9A9"
+                        android:textColor="#000000"
                         android:textSize="@dimen/detail_body_text_size" />
 
                     <TextView
@@ -76,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/subtitleTextAppearance"
-                        android:textColor="#A9A9A9"
+                        android:textColor="#000000"
                         android:textSize="@dimen/detail_body_text_size" />
 
                 </LinearLayout>
@@ -92,7 +95,7 @@
                 app:paddingStart="0dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
-                <com.example.xyzreader.ui.views.SimpleTextSwitcher
+                <com.example.xyzreader.ui.TextSwitcherView
                     android:id="@+id/simple_text_switcher_toolbar_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,7 +120,7 @@
             android:orientation="vertical">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
+                android:id="@+id/article_details_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
