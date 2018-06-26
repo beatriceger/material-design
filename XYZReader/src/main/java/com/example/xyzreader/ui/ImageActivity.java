@@ -25,23 +25,22 @@ import com.squareup.picasso.Target;
 
 public class ImageActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String ARG_IMAGE_URL = "image_url";
-    private static final String ARG_TITLE = "title";
-    private static final String ARG_AUTHOR = "author";
-    private static final String ARG_DATE = "date";
+    private static final String IMG_URL = "image_url";
+    private static final String TITLE = "title";
+    private static final String AUTHOR = "author";
+    private static final String DATE = "date";
 
-    private static final boolean AUTO_HIDE = true;
-
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
+    private static final int HIDE_DELAY_MILLIS = 3000;
     private static final int UI_ANIMATION_DELAY = 300;
+    private static final boolean HIDE = true;
+
     private final Handler mHideHandler = new Handler();
 
     private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+            if (HIDE) {
+                delay(HIDE_DELAY_MILLIS);
             }
             return false;
         }
@@ -88,10 +87,10 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
                                      String date,
                                      String imgUrl) {
         Intent intent = new Intent(context, ImageActivity.class);
-        intent.putExtra(ARG_TITLE, title);
-        intent.putExtra(ARG_AUTHOR, author);
-        intent.putExtra(ARG_DATE, date);
-        intent.putExtra(ARG_IMAGE_URL, imgUrl);
+        intent.putExtra(TITLE, title);
+        intent.putExtra(AUTHOR, author);
+        intent.putExtra(DATE, date);
+        intent.putExtra(IMG_URL, imgUrl);
         context.startActivity(intent);
     }
 
@@ -124,7 +123,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         mImgBtnClose.setOnTouchListener(mDelayHideTouchListener);
 
         Picasso.with(this)
-                .load(getIntent().getExtras().getString(ARG_IMAGE_URL))
+                .load(getIntent().getExtras().getString(IMG_URL))
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -146,19 +145,19 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
                 });
 
         // set other data
-        mTxtTitle.setText(getIntent().getExtras().getString(ARG_TITLE));
-        mTxtAuthor.setText(getIntent().getExtras().getString(ARG_AUTHOR));
+        mTxtTitle.setText(getIntent().getExtras().getString(TITLE));
+        mTxtAuthor.setText(getIntent().getExtras().getString(AUTHOR));
 
         mTxtDate.setText(DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(getIntent().getExtras().getString(ARG_DATE)),
+                Long.parseLong(getIntent().getExtras().getString(DATE)),
                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_ALL).toString());
 
         // set fonts
-        mTxtTitle.setTypeface(Typeface.createFromAsset(getResources().getAssets(),
-                "Montserrat-Bold.ttf"));
         mTxtAuthor.setTypeface(Typeface.createFromAsset(getResources().getAssets(),
                 "Montserrat-Regular.ttf"));
+        mTxtTitle.setTypeface(Typeface.createFromAsset(getResources().getAssets(),
+                "Montserrat-Bold.ttf"));
         mTxtDate.setTypeface(Typeface.createFromAsset(getResources().getAssets(),
                 "Montserrat-Regular.ttf"));
     }
@@ -196,10 +195,11 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
      */
-    private void delayedHide(int delayMillis) {
+    private void delay(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
     @Override
     public void finish() {
         super.finish();

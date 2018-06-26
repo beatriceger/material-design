@@ -37,19 +37,21 @@ import java.lang.ref.WeakReference;
  */
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
-    public static final String ARG_ITEM_POSITION = "item_position";
-    private static final String TAG = "ArticleDetailActivity";
-    private TextView mTxtTitle, mTxtAuthor, mTxtDate;
+
+    private TextView mTxtTitle, mTxtAuthor;
+    private TextView mTxtDate;
     private ImageView mImageViewPhoto;
     private ViewPager mPager;
+    private TextSwitcherView mSimpleTextSwitcherToolbarTitle;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private FrameLayout mFrameLayoutCollapsingToolbar;
     private MyPagerAdapter mPagerAdapter;
     private Toolbar mToolbar;
     private AppBarLayout mAppBarLayout;
     private FloatingActionButton mFabShare;
-    private TextSwitcherView mSimpleTextSwitcherToolbarTitle;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private FrameLayout mFrameLayoutCollapsingToolbar;
 
+    public static final String ARG_ITEM_POSITION = "item_position";
+    private static final String TAG = "ArticleDetailActivity";
 
     private Cursor mCursor;
     private int mPosition = 0;
@@ -62,17 +64,19 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_article_detail);
 
-        mTxtTitle = (TextView) findViewById(R.id.text_view_title);
-        mTxtAuthor = (TextView) findViewById(R.id.text_view_author);
-        mTxtDate = (TextView) findViewById(R.id.text_view_date);
+        // initialize components
+        mPager = (ViewPager) findViewById(R.id.article_details_pager);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.article_detail_app_bar);
+        mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
         mImageViewPhoto = (ImageView) findViewById(R.id.article_image_view_photo);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.article_details_toolbar_layout);
         mFrameLayoutCollapsingToolbar = (FrameLayout) findViewById(R.id.frame_layout_collapsing_toolbar);
         mToolbar = (Toolbar) findViewById(R.id.up_container);
+        mTxtTitle = (TextView) findViewById(R.id.text_view_title);
+        mTxtAuthor = (TextView) findViewById(R.id.text_view_author);
+        mTxtDate = (TextView) findViewById(R.id.text_view_date);
         mSimpleTextSwitcherToolbarTitle = (TextSwitcherView) findViewById(R.id.simple_text_switcher_toolbar_title);
-        mPager = (ViewPager) findViewById(R.id.article_details_pager);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.article_detail_app_bar);
-        mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
+
         initializeComponents(savedInstanceState);
     }
 
