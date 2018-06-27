@@ -23,6 +23,10 @@ import com.example.xyzreader.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ImageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String IMG_URL = "image_url";
@@ -148,8 +152,19 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         mTxtTitle.setText(getIntent().getExtras().getString(TITLE));
         mTxtAuthor.setText(getIntent().getExtras().getString(AUTHOR));
 
+        String string_date = getIntent().getExtras().getString(DATE);
+
+        SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
+        long milliseconds=0;
+        try {
+            Date d = f.parse(string_date);
+             milliseconds = d.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         mTxtDate.setText(DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(getIntent().getExtras().getString(DATE)),
+                Long.parseLong(String.valueOf(milliseconds)),
                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_ALL).toString());
 
